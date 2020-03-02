@@ -85,16 +85,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="pdffile.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\gsdll64.lib" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -105,6 +107,25 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="Resources\gsdll64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\gsdll64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\gswin64.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\gswin64c.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gswin64.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gswin64c.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gsdll64.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
