@@ -11,17 +11,14 @@ Module Module1
                     Using proc As New Process
                         With proc
                             .StartInfo = e.ConvertProcessInfo
-                            .Start() ' the conversion
-                            While Not .HasExited ' the conversion
-                                Thread.Sleep(100)
+                            Console.WriteLine("Starting {0} {1}...", e.ConvertProcessInfo.FileName, e.ConvertProcessInfo.Arguments)
 
-                            End While
+                            .Start()
+                            Console.WriteLine(.StandardOutput.ReadToEnd)
+                            Console.WriteLine(.StandardError.ReadToEnd)
+                            .WaitForExit()
+
                         End With
-
-                        File.Copy(
-                            .pxl.FullName,
-                            Environment.GetCommandLineArgs(2)
-                        )
 
                     End Using
 
@@ -29,7 +26,7 @@ Module Module1
                     Console.Write(ex.Message)
 
                 Finally
-                    .DeleteAndWait()
+
 
                 End Try
 

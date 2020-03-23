@@ -5,10 +5,9 @@ Imports System.Threading
 Public Class pdffile : Implements IDisposable
 
     Private _file As FileInfo
-    Private _pxl As FileInfo
+
     Public Sub New(fileInfo As FileInfo)
         _file = fileInfo
-        _pxl = New FileInfo(Path.Combine(Path.GetTempPath, Replace(_file.Name.ToLower, ".pdf", ".pxl", , , CompareMethod.Binary)))
 
         If Not New FileInfo(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), "gswin64c.exe")).Exists Then
             File.WriteAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), "gswin64c.exe"), My.Resources.gswin64c)
@@ -22,25 +21,22 @@ Public Class pdffile : Implements IDisposable
 
     End Sub
 
-    Public ReadOnly Property pxl As FileInfo
-        Get
-            Return _pxl
-        End Get
-    End Property
-
     Public ReadOnly Property ConvertProcessInfo() As ProcessStartInfo
         Get
             Dim ret As New ProcessStartInfo
             With ret
                 .FileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), "gswin64c.exe")
-
+                .CreateNoWindow = True
+                .UseShellExecute = False
+                .RedirectStandardOutput = True
+                .RedirectStandardError = True
                 .Arguments = String.Format(
-                    "-dNOPAUSE -dBATCH -sDEVICE=pxlmono -sPAPERSIZE=a4 -dFIXEDMEDIA -dPDFFitPage " &
-                    "-sOutputFile={2}{1}{2} " &
+                    "-dNOPAUSE -dBATCH -sDEVICE=mswinpr2 -sPAPERSIZE=a4 -dFIXEDMEDIA -dPDFFitPage " &
+                    "-sOutputFile={2}%printer%{1}{2} " &
                     "-c {2}<</BeginPage{3}0.9 0.9 scale 29.75 42.1 translate{4}>> setpagedevice{2} " &
                     "-f {2}{0}{2}",
                     _file.FullName,
-                    _pxl.FullName,
+                    Environment.GetCommandLineArgs(2),
                     Chr(34),
                     "{",
                     "}"
@@ -51,23 +47,6 @@ Public Class pdffile : Implements IDisposable
             Return ret
         End Get
     End Property
-
-    Public Sub DeleteAndWait()
-        With New FileInfo(_pxl.FullName)
-            While .Exists
-                Try
-                    .Delete()
-
-                Catch ex As Exception
-                    Thread.Sleep(500)
-
-                End Try
-                .Refresh()
-
-            End While
-        End With
-
-    End Sub
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
