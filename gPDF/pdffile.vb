@@ -33,7 +33,7 @@ Public Class pdffile : Implements IDisposable
                 .Arguments = String.Format(
                     "-dNOPAUSE -dBATCH -sDEVICE=mswinpr2 -sPAPERSIZE=a4 -dFIXEDMEDIA -dPDFFitPage -dNoCancel " &
                     "-sOutputFile={2}%printer%{1}{2} " &
-                    "-c {2}<</BeginPage{3}0.9 0.9 scale 29.75 42.1 translate{4}>> setpagedevice{2} " &
+                    "-c {2}<</Debug false /BeginPage{3}0.9 0.9 scale 29.75 42.1 translate{4}>> setpagedevice{2} " &
                     "-f {2}{0}{2}",
                     _file.FullName,
                     Environment.GetCommandLineArgs(2),
